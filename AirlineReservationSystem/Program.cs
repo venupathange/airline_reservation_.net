@@ -1,8 +1,10 @@
 ﻿using AirlineReservationSystem.Data;
-using AirlineReservationSystem.Services.Interfaces;
-using AirlineReservationSystem.Services.Implementations;
-using AirlineReservationSystem.Repositories.Interfaces;
+using AirlineReservationSystem.Data.Repositories;
 using AirlineReservationSystem.Repositories.Implementations;
+using AirlineReservationSystem.Repositories.Interfaces;
+using AirlineReservationSystem.Services;
+using AirlineReservationSystem.Services.Implementations;
+using AirlineReservationSystem.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,10 @@ builder.Services.AddScoped<IAirplaneRepository, AirplaneRepository>();
 // Register service
 builder.Services.AddScoped<IAirportService, AirportService>();
 builder.Services.AddScoped<IAirplaneService, AirplaneService>();
+
+
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+builder.Services.AddScoped<IFlightService, FlightService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
