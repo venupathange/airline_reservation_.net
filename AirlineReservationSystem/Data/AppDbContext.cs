@@ -11,11 +11,31 @@ namespace AirlineReservationSystem.Data
         public DbSet<Airport> Airports { get; set; } // ✅ MUST be DbSet<Airport>
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<Flight> Flights { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
+        // Add other entities like Flights, Airplanes here...
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Wallet configuration// Wallet configuration
+            modelBuilder.Entity<Wallet>().ToTable("WALLETS");
+
+            modelBuilder.Entity<Wallet>()
+                .Property(e => e.UserId)
+                .HasColumnName("USER_ID");
+
+            modelBuilder.Entity<Wallet>()
+                .HasOne(w => w.User)
+                .WithOne()
+                .HasForeignKey<Wallet>(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // User configuration
+            modelBuilder.Entity<User>().ToTable("USERS");
+
+            // Airplane configuration
             modelBuilder.Entity<Airplane>(entity =>
             {
                 entity.ToTable("AIRPLANES");
@@ -27,6 +47,7 @@ namespace AirlineReservationSystem.Data
                 entity.Property(e => e.BusinessSeats).HasColumnName("BusinessSeats");
             });
 
+            // Flight configuration
             modelBuilder.Entity<Flight>(entity =>
             {
                 entity.ToTable("FLIGHTS");

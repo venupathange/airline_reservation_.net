@@ -27,6 +27,7 @@ namespace AirlineReservationSystem.Controllers
         {
             var airport = await _service.GetAirportByIdAsync(id);
             if (airport == null) return NotFound();
+
             return Ok(airport);
         }
 

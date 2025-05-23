@@ -3,6 +3,7 @@ using System;
 using AirlineReservationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace AirlineReservationSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250523073619_RenameRoleColumns5")]
+    partial class RenameRoleColumns5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,28 +109,6 @@ namespace AirlineReservationSystem.Migrations
                     b.ToTable("USERS", (string)null);
                 });
 
-            modelBuilder.Entity("AirlineReservationSystem.Data.Entities.Wallet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("DECIMAL(18, 2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Wallets");
-                });
-
             modelBuilder.Entity("AirlineReservationSystem.Models.Airport", b =>
                 {
                     b.Property<int>("Id")
@@ -201,17 +182,6 @@ namespace AirlineReservationSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FLIGHTS", (string)null);
-                });
-
-            modelBuilder.Entity("AirlineReservationSystem.Data.Entities.Wallet", b =>
-                {
-                    b.HasOne("AirlineReservationSystem.Data.Entities.User", "User")
-                        .WithOne()
-                        .HasForeignKey("AirlineReservationSystem.Data.Entities.Wallet", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
